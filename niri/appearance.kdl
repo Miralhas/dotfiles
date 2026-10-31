@@ -1,0 +1,152 @@
+// Niri appearance: Atom One Dark (VS Code "One Dark Pro"-style palette)
+//
+// Save as ~/.config/niri/appearance.kdl and pull it into config.kdl with:
+//
+//   include "appearance.kdl"
+//
+// Everything visual lives here: gaps, borders, shadows, corner radius,
+// backdrops and blur. config.kdl keeps behavior only (input, binds, rules).
+//
+// Palette reference
+//   editor bg   #282c34    sidebar/title bar  #21252b    darkest border #181a1f
+//   fg          #abb2bf    muted              #5c6370    selection      #3e4451
+//   blue        #61afef    purple             #c678dd    cyan           #56b6c2
+//   green       #98c379    yellow             #e5c07b    red            #e06c75
+//   orange      #d19a66
+
+prefer-no-csd
+
+layout {
+    gaps 4
+
+    // Window borders (replaces focus-ring so it behaves like Umbriel's border)
+    focus-ring {
+        off
+    }
+
+    border {
+        on
+        width 2
+        active-color "#6F6E6C"
+        inactive-color "#3e4451"
+        urgent-color "#e06c75"
+    }
+
+    // Drag-and-drop target preview
+    insert-hint {
+        on
+        color "#61afef80"
+    }
+
+    // Tabbed columns: niri draws a tab indicator, not title-bar tabs
+    tab-indicator {
+        on
+        position "top"
+        width 4
+        gap 4
+        corner-radius 2
+        active-color "#61afef"
+        inactive-color "#3e4451"
+        urgent-color "#e06c75"
+    }
+
+    shadow {
+        on
+        softness 20
+        spread 0
+        offset x=0 y=4
+        color "#00000080"
+    }
+
+    // Color behind windows on an empty workspace
+    background-color "#181a1f"
+}
+
+overview {
+    // Dim backdrop behind the overview
+    backdrop-color "#181a1f"
+
+    workspace-shadow {
+        on
+        softness 40
+        spread 10
+        offset x=0 y=10
+        color "#00000050"
+    }
+}
+
+// Rounded corners on every window (corner_radius = 10)
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+}
+
+// Blur every window without xray so it looks more realistic.
+// Only visible on apps with transparent backgrounds.
+window-rule {
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Noctalia: disable xray on all its surfaces so it looks more realistic.
+// Noctalia publishes blur regions automatically when ext-background-effects is available.
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+    background-effect {
+        xray false
+        // blur false
+    }
+}
+
+// Blur on Noctalia's window switcher, also without xray.
+layer-rule {
+    match namespace="noctalia-window-switcher"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// Global blur tuning (values carried over from your previous config).
+blur {
+    passes 2        // more passes = stronger blur (default: 3)
+    offset 3.0      // sample distance per pass (default: 3.0)
+    noise 0.03      // grain overlay (default: 0.02)
+    saturation 1.0  // color saturation boost (default: 1.5)
+}
+
+// Animation Settings
+animations {
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+    window-close {
+        duration-ms 200
+        curve "ease-out-cubic"
+    }
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    config-notification-open-close {
+        spring damping-ratio=0.6 stiffness=1200 epsilon=0.001
+    }
+    screenshot-ui-open {
+        duration-ms 300
+        curve "ease-out-quad"
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=900 epsilon=0.0001
+    }
+}
