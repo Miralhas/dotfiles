@@ -246,7 +246,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"firefox-esr$"# title="^Picture-in-Picture$"
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
@@ -256,8 +256,10 @@ window-rule {
 }
 
 window-rule {
-    match title=r#".*Sign in - Google Accounts — Mozilla Firefox"#
+    match app-id=r#"firefox$"# title="^Sign in - Google Accounts"
     open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
 }
 
 // System dialogs
@@ -273,4 +275,10 @@ window-rule {
     default-column-width { proportion 0.0; }
     max-width 800
     max-height 1000
+}
+
+gestures {
+    hot-corners {
+        off
+    }
 }
