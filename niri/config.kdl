@@ -22,12 +22,12 @@ input {
 
 }
 
-output "DP-2" {
+output "DP-1" {
     mode "1920x1080@144"
     focus-at-startup
 }
 
-output "DP-3" {
+output "DP-2" {
     mode "1600x900@60"
 }
 
